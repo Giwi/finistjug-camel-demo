@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://dozer.sourceforge.net http://dozer.sourceforge.net/schema/beanmapping.xsd">
+	<configuration>
+		<stop-on-errors>true</stop-on-errors>
+		<date-format>dd-MM-yyyy hh:mm:ss</date-format>
+		<wildcard>true</wildcard>
+		<trim-strings>true</trim-strings>
+	</configuration>
+	<mapping>
+		<class-a>org.giwi.finistjug.finistjug.camel.demo.jpa.model.Participant
+		</class-a>
+		<class-b>org.giwi.finistjug.finistjug.camel.demo.ws.model.Utilisateur
+		</class-b>
+		<field>
+			<a>id</a>
+			<b>regId</b>
+		</field>
+		<field>
+			<a>name</a>
+			<b>nom</b>
+		</field>
+		<field>
+			<a>forname</a>
+			<b>prenom</b>
+		</field>
+		<field>
+			<a>email</a>
+			<b>courriel</b>
+		</field>
+		<field>
+			<a>jugPresentation.id</a>
+			<b>idSession</b>
+		</field>
+	</mapping>
+	<mapping>
+		<class-a>org.giwi.finistjug.finistjug.camel.demo.jpa.model.Jugpresentation
+		</class-a>
+		<class-b>org.giwi.finistjug.finistjug.camel.demo.ws.model.JUGSession</class-b>
+		<field>
+			<a>participants</a>
+			<b>listeDesParticipants</b>
+		</field>
+		<field>
+			<a>title</a>
+			<b>nomSession</b>
+		</field>
+		<field>
+			<a>presentationDate</a>
+			<b>dateSession</b>
+		</field>
+		<field>
+			<a>description</a>
+			<b>description</b>
+		</field>
+		<field>
+			<a>id</a>
+			<b>identifiant</b>
+		</field>
+	</mapping>
+</mappings>
