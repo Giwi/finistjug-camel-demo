@@ -1,5 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
 	<persistence-unit name="finistjug-camel-demo">
+		<class>org.giwi.finistjug.finistjug.camel.demo.jpa.model.JugPresentation</class>
+		<class>org.giwi.finistjug.finistjug.camel.demo.jpa.model.Participant</class>
+	    <properties>
+			<property name="eclipselink.ddl-generation.output-mode" value="database" />
+			<property name="eclipselink.create-ddl-jdbc-file-name" value="createDDL.sql" />
+			<property name="eclipselink.drop-ddl-jdbc-file-name" value="dropDDL.sql" />
+			<property name="eclipselink.application-location" value="./database" />
+			<property name="eclipselink.jdbc.read-connections.max" value="3" />
+			<property name="eclipselink.jdbc.read-connections.min" value="1" />
+			<property name="eclipselink.jdbc.read-connections.shared" value="true" />
+			<property name="eclipselink.jdbc.write-connections.max" value="5" />
+			<property name="eclipselink.jdbc.write-connections.min" value="2" />
+			<property name="eclipselink.target-database" value="MySQL" />
+			<property name="eclipselink.jdbc.batch-writing" value="JDBC" />
+			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/FinistJug?sessionVariables=storage_engine=InnoDB" />
+			<property name="javax.persistence.jdbc.user" value="FinistJug" />
+			<property name="javax.persistence.jdbc.password" value="FinistJug" /> 
+			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
+			<property name="eclipselink.ddl-generation" value="create-tables"/>
+		</properties>
 	</persistence-unit>
 </persistence>
