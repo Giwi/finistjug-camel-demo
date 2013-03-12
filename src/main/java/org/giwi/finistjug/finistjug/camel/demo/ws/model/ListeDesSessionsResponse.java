@@ -14,34 +14,34 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.giwi.finistjug.finistjug.camel.demo.ws;
+package org.giwi.finistjug.finistjug.camel.demo.ws.model;
 
-import org.giwi.finistjug.finistjug.camel.demo.ws.model.JUGSession;
-import org.giwi.finistjug.finistjug.camel.demo.ws.model.ListeDesSessionsResponse;
-import org.giwi.finistjug.finistjug.camel.demo.ws.model.Spectateur;
+import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author Giwi Softwares
  * 
  */
-public interface WebServiceIFace {
+public class ListeDesSessionsResponse implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6313823481834625384L;
+	private List<JUGSession> listeDesSessions;
 
 	/**
-	 * @param spectateur
-	 *            un spectateur
-	 * @return un spectateur créé
+	 * @return listeDesSessions
 	 */
-	Spectateur ajouterParticipant(Spectateur spectateur);
+	public List<JUGSession> getListeDesSessions() {
+		return listeDesSessions;
+	}
 
 	/**
-	 * @param session
-	 *            une session du JUG
-	 * @return une session créée
+	 * @param listeDesSessions
+	 *            listeDesSessions
 	 */
-	JUGSession ajouterSession(JUGSession session);
-
-	/**
-	 * @return la liste des sessions dispo
-	 */
-	ListeDesSessionsResponse listeDesSessions();
+	public void setListeDesSessions(List<JUGSession> listeDesSessions) {
+		this.listeDesSessions = listeDesSessions;
+	}
 }

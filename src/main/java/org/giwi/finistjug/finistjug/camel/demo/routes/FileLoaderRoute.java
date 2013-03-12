@@ -14,34 +14,45 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.giwi.finistjug.finistjug.camel.demo.ws;
+package org.giwi.finistjug.finistjug.camel.demo.routes;
 
-import org.giwi.finistjug.finistjug.camel.demo.ws.model.JUGSession;
-import org.giwi.finistjug.finistjug.camel.demo.ws.model.ListeDesSessionsResponse;
+import org.apache.camel.Exchange;
+import org.apache.camel.Processor;
+import org.apache.camel.builder.RouteBuilder;
 import org.giwi.finistjug.finistjug.camel.demo.ws.model.Spectateur;
 
 /**
  * @author Giwi Softwares
  * 
  */
-public interface WebServiceIFace {
+public class FileLoaderRoute extends RouteBuilder {
 
-	/**
-	 * @param spectateur
-	 *            un spectateur
-	 * @return un spectateur créé
-	 */
-	Spectateur ajouterParticipant(Spectateur spectateur);
+	@Override
+	public void configure() throws Exception {
 
-	/**
-	 * @param session
-	 *            une session du JUG
-	 * @return une session créée
-	 */
-	JUGSession ajouterSession(JUGSession session);
+		from("file:input?move=.done/backup/${date:now:yyyyMMdd}/${file:name}")
 
-	/**
-	 * @return la liste des sessions dispo
-	 */
-	ListeDesSessionsResponse listeDesSessions();
+		.split(body(String.class).tokenize("\n")).parallelProcessing()
+
+		.process(new Processor() {
+
+			@Override
+			public void process(Exchange exchange) throws Exception {
+				String[] line = exchange.getIn().getBody(String.class)
+						.split(";");
+
+				Spectateur s = new Spectateur();
+				s.setNom(line[0]);
+				s.setPrenom(line[1]);
+				s.setCourriel(line[2]);
+				s.setIdSession(line[3]);
+
+				exchange.getIn().setBody(s);
+
+			}
+		})
+
+		.to("direct:ajouterParticipant");
+
+	}
 }

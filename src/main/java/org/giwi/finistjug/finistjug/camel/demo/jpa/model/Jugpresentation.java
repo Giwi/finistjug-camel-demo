@@ -1,5 +1,7 @@
 package org.giwi.finistjug.finistjug.camel.demo.jpa.model;
 
+import static javax.persistence.FetchType.EAGER;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -23,7 +25,9 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "JUGPRESENTATION")
-@NamedQueries({ @NamedQuery(name = "step1", query = "select j from Jugpresentation j where j.id = 1"), @NamedQuery(name = "step2", query = "select j from Jugpresentation j") })
+@NamedQueries({
+		@NamedQuery(name = "step1", query = "select j from Jugpresentation j where j.id = 1"),
+		@NamedQuery(name = "step2", query = "select j from Jugpresentation j") })
 public class Jugpresentation implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -47,7 +51,7 @@ public class Jugpresentation implements Serializable {
 	private String url;
 
 	// bi-directional many-to-one association to Participant
-	@OneToMany(mappedBy = "jugpresentation")
+	@OneToMany(mappedBy = "jugpresentation", fetch = EAGER)
 	private List<Participant> participants;
 
 	public Jugpresentation() {

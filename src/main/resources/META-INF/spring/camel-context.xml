@@ -4,24 +4,29 @@
 	Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
 	See the License for the specific language governing permissions and limitations under the License. -->
 <!-- Configures the Camel Context -->
-<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:cxf="http://camel.apache.org/schema/cxf" xmlns:http="http://cxf.apache.org/transports/http/configuration"
-	xmlns:sec="http://cxf.apache.org/configuration/security"
-	xsi:schemaLocation="
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:camel="http://camel.apache.org/schema/spring"
+       xmlns:cxf="http://camel.apache.org/schema/cxf"
+       xsi:schemaLocation="
        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-       http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd 
-       http://cxf.apache.org/configuration/security http://cxf.apache.org/schemas/configuration/security.xsd
- 	   http://cxf.apache.org/transports/http/configuration http://cxf.apache.org/schemas/configuration/http-conf.xsd
- 	   http://camel.apache.org/schema/cxf http://camel.apache.org/schema/cxf/camel-cxf.xsd">
+       http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
+       http://camel.apache.org/schema/cxf http://camel.apache.org/schema/cxf/camel-cxf.xsd">
 	<!-- needed cxf imports -->
 	<import resource="classpath:META-INF/cxf/cxf.xml"/>
 	<import resource="classpath:META-INF/cxf/cxf-extension-soap.xml"/>
 	<!-- use the CXF servlet -->
 	<import resource="classpath:META-INF/cxf/cxf-servlet.xml"/>
+	
 	<camelContext xmlns="http://camel.apache.org/schema/spring">
 		<package>org.giwi.finistjug.finistjug.camel.demo.routes</package>
 	</camelContext>
+	
+	<bean id="ListOfSessionsProcessor" class="org.giwi.finistjug.finistjug.camel.demo.processor.ListOfSessionsProcessor" scope="singleton" />
+	
 	<bean id="dozerConverterLoader" class="org.apache.camel.converter.dozer.DozerTypeConverterLoader"/>
-	<bean id="mapper" class="org.dozer.DozerBeanMapper">
+	
+	<bean id="mapper" class="org.dozer.DozerBeanMapper" scope="singleton">
 		<property name="mappingFiles">
 			<list>
 				<value>dozerMapping.xml</value>

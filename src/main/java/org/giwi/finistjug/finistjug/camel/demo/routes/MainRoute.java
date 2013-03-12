@@ -16,18 +16,22 @@
  */
 package org.giwi.finistjug.finistjug.camel.demo.routes;
 
-import org.apache.camel.Exchange;
-import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.spring.Main;
+import org.giwi.finistjug.finistjug.camel.demo.jpa.model.Jugpresentation;
 import org.giwi.finistjug.finistjug.camel.demo.jpa.model.Participant;
 import org.giwi.finistjug.finistjug.camel.demo.ws.model.JUGSession;
-import org.giwi.finistjug.finistjug.camel.demo.ws.model.Utilisateur;
+import org.giwi.finistjug.finistjug.camel.demo.ws.model.Spectateur;
 
 /**
- * A Camel Router
+ * @author Giwi Softwares
+ * 
+ *         A Camel Router
  */
 public class MainRoute extends RouteBuilder {
+
+	private static String SERVICE_IFACE = "org.giwi.finistjug.finistjug.camel.demo.ws.WebServiceIFace";
+	private static String SOAP_LOGGIN = "true";
 
 	/**
 	 * A main() so we can easily run these routing rules in our IDE
@@ -41,50 +45,41 @@ public class MainRoute extends RouteBuilder {
 	 */
 	@Override
 	public void configure() {
-		from("cxf://finistJugService?serviceClass=org.giwi.finistjug.finistjug.camel.demo.ws.WebServiceIFace")
+
+		/** Endpoint CXF **/
+		from(
+				"cxf://finistJugService?serviceClass=" + SERVICE_IFACE
+						+ "&loggingFeatureEnabled=" + SOAP_LOGGIN)
+
+		.routeId("cxf")
 
 		.recipientList(simple("direct:${header.operationName}"));
 
-		from("direct:ajouterParticipant")
+		/****************************************************************** */
+		/** Méthode : ajouterParticipant **/
+		from("direct:ajouterParticipant").routeId("direct:ajouterParticipant")
 
 		.convertBodyTo(Participant.class)
 
-		.to("jpa:org.giwi.finistjug.finistjug.camel.demo.jpa.model.Participant?persistenceUnit=finistjug-camel-demo")
+		.to("jpa:?persistenceUnit=finistjug-camel-demo")
 
-		.convertBodyTo(Utilisateur.class);
+		.convertBodyTo(Spectateur.class);
 
-		from("direct:listeDesSession").setBody(simple("select * from JUGSESSION"))
+		/****************************************************************** */
+		/** Méthode : ajouterSession **/
+		from("direct:ajouterSession").routeId("direct:ajouterSession")
 
-		.to("sql:select * from JUGSESSION?dataSourceRef=finistjug-camel-demo")
+		.convertBodyTo(Jugpresentation.class)
 
-		.convertBodyTo(JUGSession.class)
+		.to("jpa:?persistenceUnit=finistjug-camel-demo")
 
-		.process(new Processor() {
+		.convertBodyTo(JUGSession.class);
 
-			@Override
-			public void process(Exchange arg0) throws Exception {
-				if (arg0.getIn().getBody() != null) {
-					System.out.println(arg0.getIn().getBody(JUGSession.class).getNomSession());
-				}
+		/****************************************************************** */
+		/** Méthode : listeDesSessions **/
+		from("direct:listeDesSessions").routeId("direct:listeDesSessions")
 
-			}
-		});
-
-		from("timer:foo?fixedRate=true&period=5000").to("direct:listeDesSession");
-
-		// from("timer:bar?fixedRate=true&period=1000").process(new Processor()
-		// {
-		//
-		// @Override
-		// public void process(Exchange arg0) throws Exception {
-		// Utilisateur u = new Utilisateur();
-		// u.setIdSession("1");
-		// u.setNom(String.valueOf(System.currentTimeMillis()));
-		// u.setPrenom("toto");
-		// arg0.getIn().setBody(u);
-		//
-		// }
-		// }).to("direct:ajouterParticipant");
+		.processRef("ListOfSessionsProcessor");
 
 	}
 }

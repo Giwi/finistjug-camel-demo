@@ -1,42 +1,49 @@
 package org.giwi.finistjug.finistjug.camel.demo.jpa.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 /**
  * The persistent class for the PARTICIPANT database table.
  * 
  */
 @Entity
-@Table(name="PARTICIPANT")
+@Table(name = "PARTICIPANT")
 public class Participant implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name="ID")
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "ID")
 	private int id;
 
-	@Column(name="EMAIL")
+	@Column(name = "EMAIL")
 	private String email;
 
-	@Column(name="FORNAME")
+	@Column(name = "FORNAME")
 	private String forname;
 
-	@Column(name="NAME")
+	@Column(name = "NAME")
 	private String name;
 
-	//bi-directional many-to-one association to Jugpresentation
+	// bi-directional many-to-one association to Jugpresentation
 	@ManyToOne
-	@JoinColumn(name="pres_id")
+	@JoinColumn(name = "pres_id")
 	private Jugpresentation jugpresentation;
 
 	public Participant() {
 	}
 
 	public int getId() {
-		return this.id;
+		return id;
 	}
 
 	public void setId(int id) {
@@ -44,7 +51,7 @@ public class Participant implements Serializable {
 	}
 
 	public String getEmail() {
-		return this.email;
+		return email;
 	}
 
 	public void setEmail(String email) {
@@ -52,7 +59,7 @@ public class Participant implements Serializable {
 	}
 
 	public String getForname() {
-		return this.forname;
+		return forname;
 	}
 
 	public void setForname(String forname) {
@@ -60,7 +67,7 @@ public class Participant implements Serializable {
 	}
 
 	public String getName() {
-		return this.name;
+		return name;
 	}
 
 	public void setName(String name) {
@@ -68,7 +75,7 @@ public class Participant implements Serializable {
 	}
 
 	public Jugpresentation getJugpresentation() {
-		return this.jugpresentation;
+		return jugpresentation;
 	}
 
 	public void setJugpresentation(Jugpresentation jugpresentation) {

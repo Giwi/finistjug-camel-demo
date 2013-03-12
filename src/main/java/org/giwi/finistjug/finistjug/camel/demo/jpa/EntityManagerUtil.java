@@ -14,34 +14,42 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.giwi.finistjug.finistjug.camel.demo.ws;
+package org.giwi.finistjug.finistjug.camel.demo.jpa;
 
-import org.giwi.finistjug.finistjug.camel.demo.ws.model.JUGSession;
-import org.giwi.finistjug.finistjug.camel.demo.ws.model.ListeDesSessionsResponse;
-import org.giwi.finistjug.finistjug.camel.demo.ws.model.Spectateur;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 /**
  * @author Giwi Softwares
  * 
+ *         Singleton d'accès à l'entityManager JPA
+ * 
  */
-public interface WebServiceIFace {
+public final class EntityManagerUtil {
+	private static final EntityManagerFactory EMF_INSTANCE = Persistence
+			.createEntityManagerFactory("finistjug-camel-demo");
 
 	/**
-	 * @param spectateur
-	 *            un spectateur
-	 * @return un spectateur créé
+	 * Constructeur non instanciable
 	 */
-	Spectateur ajouterParticipant(Spectateur spectateur);
+	private EntityManagerUtil() {
+		// vide exprès
+	}
 
 	/**
-	 * @param session
-	 *            une session du JUG
-	 * @return une session créée
+	 * 
+	 * @return EntityManager
 	 */
-	JUGSession ajouterSession(JUGSession session);
+	public static EntityManager getEntityManager() {
+		return EMF_INSTANCE.createEntityManager();
+	}
 
 	/**
-	 * @return la liste des sessions dispo
+	 * @return EntityManagerFactory
 	 */
-	ListeDesSessionsResponse listeDesSessions();
+	public static EntityManagerFactory getFactory() {
+		return EMF_INSTANCE.createEntityManager().getEntityManagerFactory();
+	}
+
 }

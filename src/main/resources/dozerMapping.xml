@@ -10,7 +10,7 @@
 	<mapping>
 		<class-a>org.giwi.finistjug.finistjug.camel.demo.jpa.model.Participant
 		</class-a>
-		<class-b>org.giwi.finistjug.finistjug.camel.demo.ws.model.Utilisateur
+		<class-b>org.giwi.finistjug.finistjug.camel.demo.ws.model.Spectateur
 		</class-b>
 		<field>
 			<a>id</a>
