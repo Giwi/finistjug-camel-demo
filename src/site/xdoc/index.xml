@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document>
+	<properties>
+		<author>Giwi Softwares</author>
+		<title>Description</title>
+	</properties>
+	<meta name="keyword" content="camel, apache, java" />
+	<body>
+		<section name="finistjug-camel-demo">
+			<subsection name="Introduction">
+				<p>
+					This is a demo project to demonstrate the power of
+					<a href="http://camel.apache.org/" target="_blank">Apache Camel</a>
+					during a liveshow at the
+					<a href="http://finistjug.fr/" target="_blank">
+						FinistJUG
+					</a>
+					on 2013/03/21.
+				</p>
+
+			</subsection>
+			<subsection name="EIP">
+				<img src="images/EIP.png" />
+			</subsection>
+			<subsection name="Slides">
+				<iframe src="http://www.slideshare.net/slideshow/embed_code/17135594"
+					width="476" height="400" frameborder="0" marginwidth="0"
+					marginheight="0" scrolling="no"></iframe>
+			</subsection>
+
+		</section>
+
+	</body>
+</document>

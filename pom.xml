@@ -14,17 +14,67 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.giwi.finistjug</groupId>
 	<artifactId>finistjug-camel-demo</artifactId>
-
+	<licenses>
+		<license>
+			<name>Licensed to the Apache Software Foundation (ASF)</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0</url>
+		</license>
+	</licenses>
+	<developers>
+		<developer>
+			<id>giwi</id>
+			<name>MARIN Xavier</name>
+			<email>giwi@free.fr</email>
+			<roles>
+				<role>Project Manager</role>
+				<role>Architect</role>
+				<role>Developper</role>
+			</roles>
+			<organization>Giwi.org</organization>
+			<timezone>+1</timezone>
+		</developer>
+	</developers>
 	<packaging>war</packaging>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>A Camel Route Demo</name>
-	<url>http://giwi.free.fr</url>
+	<url>https://github.com/Giwi/finistjug-camel-demo</url>
+	<scm>
+		<connection>scm:git:https://github.com/Giwi/finistjug-camel-demo.git</connection>
+		<developerConnection>scm:git:https://github.com/Giwi/finistjug-camel-demo.git</developerConnection>
+		<url>scm:git:https://github.com/Giwi/finistjug-camel-demo.git</url>
+	</scm>
 	<repositories>
 		<repository>
 			<id>EclipseLink</id>
 			<url>http://download.eclipse.org/rt/eclipselink/maven.repo</url>
 		</repository>
 	</repositories>
+	<reporting>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-changelog-plugin</artifactId>
+				<version>2.2</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.9</version>
+				<configuration>
+					<javadocExecutable>/usr/bin/javadoc</javadocExecutable>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.camel</groupId>
+				<artifactId>camel-maven-plugin</artifactId>
+				<configuration>
+					<fileApplicationContextUri>
+						src/main/resources/META-INF/spring/*.xml
+					</fileApplicationContextUri>
+				</configuration>
+			</plugin>
+		</plugins>
+	</reporting>
 	<dependencies>
 		<dependency>
 			<groupId>org.eclipse.persistence</groupId>
@@ -104,12 +154,16 @@
 			<artifactId>spring-web</artifactId>
 			<version>3.0.5.RELEASE</version>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.geronimo.specs</groupId>
+			<artifactId>geronimo-servlet_2.5_spec</artifactId>
+			<version>1.2</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<finalName>finistjug-camel-demo</finalName>
 		<defaultGoal>install</defaultGoal>
 		<plugins>
-
 			<plugin>
 				<groupId>org.mortbay.jetty</groupId>
 				<artifactId>maven-jetty-plugin</artifactId>
