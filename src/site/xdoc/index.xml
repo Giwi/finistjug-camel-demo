@@ -21,6 +21,7 @@
 			</subsection>
 			<subsection name="EIP">
 				<img src="images/EIP.png" />
+				<p><a href="images/EIP.graphml">GraphML</a></p>
 			</subsection>
 			<subsection name="Slides">
 				<iframe src="http://www.slideshare.net/slideshow/embed_code/17135594"
