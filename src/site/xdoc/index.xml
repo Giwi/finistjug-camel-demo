@@ -19,6 +19,12 @@
 				</p>
 
 			</subsection>
+			<subsection name="How to run">
+			    <p>You need a MySQL Database (see src/main/resources/META-INF/persistence.xml)</p>
+			    <p>then simply type : </p>
+			    <code>mvn jetty:run</code>
+			    <p>and play with <a href="http://localhost:8080/finistjug-camel-demo/" target="_blank" >the service</a></p>.
+			</subsection>
 			<subsection name="EIP">
 				<img src="images/EIP.png" />
 				<p><a href="images/EIP.graphml">GraphML</a></p>
