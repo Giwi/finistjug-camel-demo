@@ -16,8 +16,13 @@
  */
 package org.giwi.finistjug.camel.demo.routes;
 
+import org.apache.camel.Exchange;
+import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.spring.Main;
+import org.apache.cxf.binding.soap.SoapFault;
+import org.apache.cxf.interceptor.Fault;
+import org.giwi.finistjug.camel.demo.exception.CustomException;
 import org.giwi.finistjug.camel.demo.jpa.model.Jugpresentation;
 import org.giwi.finistjug.camel.demo.jpa.model.Participant;
 import org.giwi.finistjug.camel.demo.ws.model.JUGSession;
@@ -30,56 +35,73 @@ import org.giwi.finistjug.camel.demo.ws.model.Spectateur;
  */
 public class MainRoute extends RouteBuilder {
 
-	private static String SERVICE_IFACE = "org.giwi.finistjug.camel.demo.ws.WebServiceIFace";
-	private static String SOAP_LOGGIN = "true";
+    private static String SERVICE_IFACE = "org.giwi.finistjug.camel.demo.ws.WebServiceIFace";
+    private static String SOAP_LOGGIN = "true";
 
-	/**
-	 * A main() so we can easily run these routing rules in our IDE
-	 */
-	public static void main(String... args) throws Exception {
-		Main.main(args);
-	}
+    /**
+     * A main() so we can easily run these routing rules in our IDE
+     */
+    public static void main(final String... args) throws Exception {
+	Main.main(args);
+    }
 
-	/**
-	 * Lets configure the Camel routing rules using Java code...
-	 */
-	@Override
-	public void configure() {
+    /**
+     * Lets configure the Camel routing rules using Java code...
+     */
+    @Override
+    public void configure() {
 
-		/** Endpoint CXF **/
-		from(
-				"cxf://finistJugService?serviceClass=" + SERVICE_IFACE
-						+ "&loggingFeatureEnabled=" + SOAP_LOGGIN)
+	onException(SoapFault.class).handled(true).processRef(
+		"exceptionProcessor");
+	onException(Fault.class).handled(true).processRef("exceptionProcessor");
+	onException(CustomException.class).handled(true).maximumRedeliveries(5)
+		.redeliveryDelay(5000).to("log:foo");
+	onException(Exception.class).handled(true).processRef(
+		"exceptionProcessor");
 
-		.routeId("cxf")
+	intercept().to("log:hello");
+	interceptFrom("direct:ajouterParticipant").process(new Processor() {
 
-		.recipientList(simple("direct:${header.operationName}"));
+	    @Override
+	    public void process(final Exchange exchange) throws Exception {
+		System.out.println(exchange.getIn().getHeader("operationName"));
+	    }
+	});
 
-		/****************************************************************** */
-		/** Méthode : ajouterParticipant **/
-		from("direct:ajouterParticipant").routeId("direct:ajouterParticipant")
+	/** Endpoint CXF **/
+	from(
+		"cxf://finistJugService?serviceClass=" + SERVICE_IFACE
+			+ "&loggingFeatureEnabled=" + SOAP_LOGGIN)
 
-		.convertBodyTo(Participant.class)
+	.routeId("cxf")
 
-		.to("jpa:?persistenceUnit=finistjug-camel-demo")
+	.recipientList(simple("direct:${header.operationName}"));
 
-		.convertBodyTo(Spectateur.class);
+	/****************************************************************** */
+	/** Méthode : ajouterParticipant **/
+	from("direct:ajouterParticipant").routeId("direct:ajouterParticipant")
 
-		/****************************************************************** */
-		/** Méthode : ajouterSession **/
-		from("direct:ajouterSession").routeId("direct:ajouterSession")
+	.convertBodyTo(Participant.class)
 
-		.convertBodyTo(Jugpresentation.class)
+	.to("jpa:?persistenceUnit=finistjug-camel-demo")
 
-		.to("jpa:?persistenceUnit=finistjug-camel-demo")
+	.convertBodyTo(Spectateur.class);
 
-		.convertBodyTo(JUGSession.class);
+	/****************************************************************** */
+	/** Méthode : ajouterSession **/
+	from("direct:ajouterSession").routeId("direct:ajouterSession")
 
-		/****************************************************************** */
-		/** Méthode : listeDesSessions **/
-		from("direct:listeDesSessions").routeId("direct:listeDesSessions")
+	.convertBodyTo(Jugpresentation.class)
 
-		.processRef("ListOfSessionsProcessor");
+	.to("jpa:?persistenceUnit=finistjug-camel-demo")
 
-	}
+	.convertBodyTo(JUGSession.class);
+
+	/****************************************************************** */
+	/** Méthode : listeDesSessions **/
+	from("direct:listeDesSessions").routeId("direct:listeDesSessions")
+
+	.processRef("ListOfSessionsProcessor");
+
+    }
 }

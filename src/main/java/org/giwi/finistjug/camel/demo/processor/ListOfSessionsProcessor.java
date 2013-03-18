@@ -41,47 +41,45 @@ import org.giwi.finistjug.camel.demo.ws.model.ListeDesSessionsResponse;
  * 
  */
 public class ListOfSessionsProcessor implements Processor {
-	private static final Log LOG = LogFactory
-			.getLog(ListOfSessionsProcessor.class);
+    private static final Log LOG = LogFactory
+	    .getLog(ListOfSessionsProcessor.class);
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.apache.camel.Processor#process(org.apache.camel.Exchange)
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public void process(Exchange exchange) throws Exception {
-		final List<JUGSession> listOfSessions = new ArrayList<JUGSession>();
-		exchange.getIn().setBody(null);
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.apache.camel.Processor#process(org.apache.camel.Exchange)
+     */
+    @SuppressWarnings("unchecked")
+    @Override
+    public void process(final Exchange exchange) throws Exception {
+	final List<JUGSession> listOfSessions = new ArrayList<JUGSession>();
+	exchange.getIn().setBody(null);
 
-		DozerBeanMapper mapper = exchange.getContext().getRegistry()
-				.lookup("mapper", DozerBeanMapper.class);
-
-		// Récupération de l'entityManager
-		final EntityManager em = EntityManagerUtil.getEntityManager();
-		final ExpressionBuilder builder = new ExpressionBuilder();
-		final ReadAllQuery databaseQuery = new ReadAllQuery(
-				Jugpresentation.class, builder);
-		final Query query = ((JpaEntityManager) em.getDelegate())
-				.createQuery(databaseQuery);
-		// exécution de la requête
-		try {
-			List<Jugpresentation> jugPres = query.getResultList();
-
-			for (Jugpresentation jugP : jugPres) {
-				em.refresh(jugP);
-				// mapping Dozer
-				listOfSessions.add(mapper.map(jugP, JUGSession.class));
-			}
-		} catch (final NoResultException e) {
-			// pas de résultat trouvé, c'est pas bien grave
-			if (LOG.isInfoEnabled()) {
-				LOG.info(e);
-			}
-		}
-		ListeDesSessionsResponse resp = new ListeDesSessionsResponse();
-		resp.setListeDesSessions(listOfSessions);
-		exchange.getIn().setBody(resp);
+	// Récupération de l'entityManager
+	final EntityManager em = EntityManagerUtil.getEntityManager();
+	final ExpressionBuilder builder = new ExpressionBuilder();
+	final ReadAllQuery databaseQuery = new ReadAllQuery(
+		Jugpresentation.class, builder);
+	final Query query = ((JpaEntityManager) em.getDelegate())
+		.createQuery(databaseQuery);
+	// exécution de la requête
+	try {
+	    final List<Jugpresentation> jugPres = query.getResultList();
+	    final DozerBeanMapper mapper = exchange.getContext().getRegistry()
+		    .lookup("mapper", DozerBeanMapper.class);
+	    for (final Jugpresentation jugP : jugPres) {
+		em.refresh(jugP);
+		// mapping Dozer
+		listOfSessions.add(mapper.map(jugP, JUGSession.class));
+	    }
+	} catch (final NoResultException e) {
+	    // pas de résultat trouvé, c'est pas bien grave
+	    if (LOG.isInfoEnabled()) {
+		LOG.info(e);
+	    }
 	}
+	final ListeDesSessionsResponse resp = new ListeDesSessionsResponse();
+	resp.setListeDesSessions(listOfSessions);
+	exchange.getIn().setBody(resp);
+    }
 }
