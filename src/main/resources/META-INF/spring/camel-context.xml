@@ -19,10 +19,10 @@
 	<import resource="classpath:META-INF/cxf/cxf-servlet.xml"/>
 	
 	<camelContext xmlns="http://camel.apache.org/schema/spring">
-		<package>org.giwi.finistjug.finistjug.camel.demo.routes</package>
+		<package>org.giwi.finistjug.camel.demo.routes</package>
 	</camelContext>
 	
-	<bean id="ListOfSessionsProcessor" class="org.giwi.finistjug.finistjug.camel.demo.processor.ListOfSessionsProcessor" scope="singleton" />
+	<bean id="ListOfSessionsProcessor" class="org.giwi.finistjug.camel.demo.processor.ListOfSessionsProcessor" scope="singleton" />
 	
 	<bean id="dozerConverterLoader" class="org.apache.camel.converter.dozer.DozerTypeConverterLoader"/>
 	

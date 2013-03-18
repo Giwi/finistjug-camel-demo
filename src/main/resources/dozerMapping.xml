@@ -8,9 +8,9 @@
 		<trim-strings>true</trim-strings>
 	</configuration>
 	<mapping>
-		<class-a>org.giwi.finistjug.finistjug.camel.demo.jpa.model.Participant
+		<class-a>org.giwi.finistjug.camel.demo.jpa.model.Participant
 		</class-a>
-		<class-b>org.giwi.finistjug.finistjug.camel.demo.ws.model.Spectateur
+		<class-b>org.giwi.finistjug.camel.demo.ws.model.Spectateur
 		</class-b>
 		<field>
 			<a>id</a>
@@ -34,9 +34,9 @@
 		</field>
 	</mapping>
 	<mapping>
-		<class-a>org.giwi.finistjug.finistjug.camel.demo.jpa.model.Jugpresentation
+		<class-a>org.giwi.finistjug.camel.demo.jpa.model.Jugpresentation
 		</class-a>
-		<class-b>org.giwi.finistjug.finistjug.camel.demo.ws.model.JUGSession</class-b>
+		<class-b>org.giwi.finistjug.camel.demo.ws.model.JUGSession</class-b>
 		<field>
 			<a>participants</a>
 			<b>listeDesParticipants</b>
