@@ -70,7 +70,7 @@ public class MainRoute extends RouteBuilder {
 
 	/** Endpoint CXF **/
 	from(
-		"cxf://finistJugService?serviceClass=" + SERVICE_IFACE
+		"cxf:/finistJugService?serviceClass=" + SERVICE_IFACE
 			+ "&loggingFeatureEnabled=" + SOAP_LOGGIN)
 
 	.routeId("cxf")

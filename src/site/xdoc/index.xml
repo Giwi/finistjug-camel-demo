@@ -8,6 +8,20 @@
 	<body>
 		<section name="finistjug-camel-demo">
 			<subsection name="Introduction">
+				<p>Dans un monde ou les grandes entreprises ont accumulé différentes
+					strates technologiques au fil des années, l’intégration de nouveaux
+					composants au sein de leur SI est de plus en plus compliquée. Les
+					protocoles d’échange se multiplient, les briques logicielles
+					doivent interagir via des workflows intelligents et les
+					développeurs perdent leurs cheveux et du temps.</p>
+				<p>Le framework Apache Camel met en œuvre des échanges de messages
+					entre différentes applications. Il prend en compte un grand nombre
+					de protocoles et s’appuie sur des règles pour déterminer la
+					destination des messages. Il utilise un langage de type DSL
+					reposant sur Java, pour exprimer les règles de routage de manière
+					claire, ainsi que les modèles d’intégration mis en œuvre.</p>
+					</subsection>
+			<subsection name="About this code">
 				<p>
 					This is a demo project to demonstrate the power of
 					<a href="http://camel.apache.org/" target="_blank">Apache Camel</a>
@@ -17,17 +31,24 @@
 					</a>
 					on 2013/03/21.
 				</p>
-
 			</subsection>
 			<subsection name="How to run">
-			    <p>You need a MySQL Database (see src/main/resources/META-INF/persistence.xml)</p>
-			    <p>then simply type : </p>
-			    <code>mvn jetty:run</code>
-			    <p>and play with <a href="http://localhost:8080/finistjug-camel-demo/" target="_blank" >the service</a></p>.
+				<p>You need a MySQL Database (see
+					src/main/resources/META-INF/persistence.xml)</p>
+				<p>then simply type : </p>
+				<code>mvn jetty:run</code>
+				<p>
+					and play with
+					<a href="http://localhost:8080/finistjug-camel-demo/" target="_blank">
+						the service</a>
+				</p>
+				.
 			</subsection>
 			<subsection name="EIP">
 				<img src="images/EIP.png" />
-				<p><a href="images/EIP.graphml">GraphML</a></p>
+				<p>
+					<a href="images/EIP.graphml">GraphML</a>
+				</p>
 			</subsection>
 			<subsection name="Slides">
 				<iframe src="http://www.slideshare.net/slideshow/embed_code/17135594"

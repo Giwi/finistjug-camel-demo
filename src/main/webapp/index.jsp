@@ -8,14 +8,13 @@
 <style type="text/css">
 .drop-shadow {
 	position: relative;
-	float: left;
-	width: 40%;
+	width: 70%;
 	padding: 1em;
-	margin: 2em 10px 4em;
+	margin: 10px auto auto auto;
 	background: #fff;
 	-webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px
 		rgba(0, 0, 0, 0.1) inset;
-	-moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px
+	cite -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px
 		rgba(0, 0, 0, 0.1) inset;
 	box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1)
 		inset;
@@ -35,6 +34,7 @@
 .lifted {
 	-moz-border-radius: 4px;
 	border-radius: 4px;
+	position: relative;
 }
 
 .lifted:before,.lifted:after {
@@ -68,10 +68,9 @@
 	<div class="drop-shadow lifted">
 		<p align="center">
 			<img alt="Camelot" src="img/grail11.jpg" width="100%" border="1"
-				style="border-color: gray;"><br />
-			<br /> <cite>"Well, on second thought, let's not go to
-				Camelot. It is a silly place"</cite>
-				<br><a href="webservices/">webservices</a>
+				style="border-color: gray;"><br /> <br /> <cite>"Well,
+				on second thought, let's not go to Camelot. It is a silly place"</cite> <br>
+			<a href="webservices/">webservices</a>
 		</p>
 	</div>
 </body>
